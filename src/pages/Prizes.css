@@ -1,0 +1,27 @@
+.div {
+    background-color: #e30909;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.div img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+    .prize div {
+        width: 45%;
+    }
+}
+
+@media (max-width: 400px) {
+    .prize div {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
