@@ -54,4 +54,15 @@ public class RegistrationController {
         }
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        try {
+            userService.deleteUser(email);
+            return ResponseEntity.ok(Map.of("message", "Používateľ bol úspešne vymazaný."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
+        }
+    }
+
 }

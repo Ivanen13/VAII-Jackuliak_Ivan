@@ -5,6 +5,7 @@ import com.example.reactbackend.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -42,6 +43,10 @@ public class UserService {
         }
 
         return user;
+    }
+    @Transactional
+    public void deleteUser(String email) {
+        userRepository.deleteByEmail(email);
     }
 
 }

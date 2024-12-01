@@ -3,9 +3,11 @@ header {
     color: #d00f0f;
     padding: 10px 0;
     text-align: center;
+    height: 100px;
 }
 
 nav ul {
+    color: #e30909;
     list-style: none;
     display: flex;
     justify-content: right;
@@ -16,39 +18,43 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #260c38;
-    text-decoration: underline;
-    text-decoration-color: #b00a0a;
-}
-
-nav ul li a:hover {
-    color: #b00a0a;
+    color: #e30909;
     text-decoration: none;
 }
 
+nav ul li a:hover {
+    text-decoration: underline;
+    color: #931414;
+}
+
 .user-options {
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    position: relative;
+    background-color:  #260c38;
+    border: 1px solid #090909;
     padding: 10px;
-    list-style: none;
-    margin: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: block;
+    width: 150px;
+    border-radius: 60px;
 }
 
 .user-options li {
     margin: 5px 0;
+    text-align: center;
 }
 
 .user-options button {
     background: none;
     border: none;
-    color: #007BFF;
+    color: #e30909;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
 }
 
 .user-options button:hover {
     text-decoration: underline;
+    color: #931414;
 }
 
 @media (max-width: 800px) {
