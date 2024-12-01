@@ -31,7 +31,7 @@ function Registration() {
             console.log('Poziadavka:', formData);
             const response = await fetch('http://127.0.0.1:8080/api/register', {
                 method: 'POST',
-                referrerPolicy: "same-origin",
+                referrerPolicy: "no-referrer-when-downgrade",
                 headers: {
                     'Content-Type': 'application/json',
                 },

@@ -1,4 +1,4 @@
-package com.example.reactbackend.others;
+package com.example.reactbackend.Users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

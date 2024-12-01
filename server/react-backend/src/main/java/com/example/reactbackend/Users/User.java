@@ -1,4 +1,4 @@
-package com.example.reactbackend.others;
+package com.example.reactbackend.Users;
 
 import jakarta.persistence.*;
 
