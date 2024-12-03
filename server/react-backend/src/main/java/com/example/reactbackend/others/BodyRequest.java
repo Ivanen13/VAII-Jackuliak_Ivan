@@ -1,6 +1,6 @@
 package com.example.reactbackend.others;
 
-public class RegistrationRequest {
+public class BodyRequest {
     private String username;
     private String email;
     private String password;

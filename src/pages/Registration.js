@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './Login.css';
 
 function Registration() {
-    const [formData, setFormData] = useState({
+    const [data, setData] = useState({
         username: '',
         email: '',
         password: '',
@@ -13,8 +13,8 @@ function Registration() {
     const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
+        setData({
+            ...data,
             [e.target.id]: e.target.value,
         });
     };
@@ -22,13 +22,13 @@ function Registration() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.password !== formData.confirmPassword) {
+        if (data.password !== data.confirmPassword) {
             setError('Heslá sa nezhodujú!');
             return;
         }
 
         try {
-            console.log('Poziadavka:', formData);
+            console.log('Poziadavka:', data);
             const response = await fetch('http://127.0.0.1:8080/api/register', {
                 method: 'POST',
                 referrerPolicy: "no-referrer-when-downgrade",
@@ -36,20 +36,21 @@ function Registration() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username: formData.username,
-                    email: formData.email,
-                    password: formData.password,
+                    username: data.username,
+                    email: data.email,
+                    password: data.password,
                 }),
             });
 
             if (response.ok) {
                 setSuccess('Registrácia bola úspešná!');
-                setFormData({
+                setData({
                     username: '',
                     email: '',
                     password: '',
                     confirmPassword: ''
                 });
+                window.location.href = '/login';
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Chyba pri registrácii.');
@@ -70,7 +71,7 @@ function Registration() {
                         <label htmlFor="username">Užívateľské meno</label>
                         <input type="text"
                                id="username"
-                               value={formData.username}
+                               value={data.username}
                                onChange={handleChange}
                                required />
                     </div>
@@ -79,7 +80,7 @@ function Registration() {
                         <label htmlFor="email">Email</label>
                         <input  type="email"
                                 id="email"
-                                value={formData.email}
+                                value={data.email}
                                 onChange={handleChange}
                                 required />
                     </div>
@@ -88,7 +89,7 @@ function Registration() {
                         <label htmlFor="password">Heslo</label>
                         <input  type="password"
                                 id="password"
-                                value={formData.password}
+                                value={data.password}
                                 onChange={handleChange}
                                 required />
                     </div>
@@ -97,7 +98,7 @@ function Registration() {
                         <label htmlFor="confirmPassword">Zopakuj heslo</label>
                         <input type="password"
                                id="confirmPassword"
-                               value={formData.confirmPassword}
+                               value={data.confirmPassword}
                                onChange={handleChange}
                                required />
                     </div>

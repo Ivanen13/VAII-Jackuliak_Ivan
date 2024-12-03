@@ -27,6 +27,7 @@ public class UserService {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
+
         return userRepository.save(user);
     }
 
@@ -35,7 +36,7 @@ public class UserService {
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            throw new IllegalArgumentException("Nesprávne zadané údaje.");
+            throw new IllegalArgumentException("Nesprávne zadaný email.");
         }
 
         if(!passwordEncoder.matches(password, user.getPassword())) {
@@ -47,6 +48,24 @@ public class UserService {
     @Transactional
     public void deleteUser(String email) {
         userRepository.deleteByEmail(email);
+    }
+
+    public User updateUser(String email, String password, String username) {
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            throw new IllegalArgumentException("Nesprávne zadané údaje.");
+        }
+
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("Nesprávne heslo.");
+        }
+
+        user.setUsername(username);
+        userRepository.save(user);
+
+        return user;
     }
 
 }

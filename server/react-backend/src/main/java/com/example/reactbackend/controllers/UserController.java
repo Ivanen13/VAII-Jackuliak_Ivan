@@ -1,6 +1,6 @@
 package com.example.reactbackend.controllers;
 
-import com.example.reactbackend.others.RegistrationRequest;
+import com.example.reactbackend.others.BodyRequest;
 import com.example.reactbackend.Users.User;
 import com.example.reactbackend.Users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 @RestController
 @RequestMapping("/api")
-public class RegistrationController {
+public class UserController {
 
     @Autowired
     private UserService userService;
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<?> registerUser(@RequestBody BodyRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Referrer-Policy", "no-referrer-when-downgrade");
 
@@ -25,11 +25,8 @@ public class RegistrationController {
         System.out.println("Email: " + request.getEmail());
         System.out.println("Password: " + request.getPassword());
         try {
-            User user = userService.registerUser(
-                request.getUsername(),
-                request.getEmail(),
-                request.getPassword()
-            );
+            User user = userService.registerUser(request.getUsername(), request.getEmail(), request.getPassword());
+
             return ResponseEntity.ok(Map.of("message","Registrácia bola úspešná!"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message",e.getMessage()));
@@ -37,12 +34,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<?> loginUser(@RequestBody BodyRequest request) {
         try {
-            User user = userService.loginUser(
-                request.getEmail(),
-                request.getPassword()
-            );
+            User user = userService.loginUser(request.getEmail(), request.getPassword());
 
             return ResponseEntity.ok(Map.of(
                 "message", "Prihlásenie bolo úspešné!",
@@ -65,4 +59,18 @@ public class RegistrationController {
         }
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody BodyRequest request) {
+        try {
+            User user = userService.updateUser(request.getEmail(), request.getPassword(), request.getUsername());
+
+            return ResponseEntity.ok(Map.of(
+                "message", "Zmena mena bola úspešná!",
+                "username", user.getUsername(),
+                "email", user.getEmail()
+            ));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
+        }
+    }
 }

@@ -7,10 +7,14 @@ import Window from "./Window";
 const Header = () => {
     const location = useLocation();
     const [showOptions, setShowOptions] = useState(false);
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isWindowOpen, setWindowOpen] = useState(false);
     const handleLogout = () => {
         localStorage.clear()
         window.location.href = '/';
+    };
+
+    const handleUpdate = () => {
+        window.location.href = '/update';
     };
 
     const handleDelete = async () => {
@@ -28,6 +32,7 @@ const Header = () => {
             if (response.ok) {
                 localStorage.clear()
                 alert(data.message);
+
             } else {
                 alert(data.message || 'Chyba pri mazaní používateľa.');
             }
@@ -38,8 +43,8 @@ const Header = () => {
 
     const handleMouseEnter = () => setShowOptions(true);
     const handleMouseLeave = () => setShowOptions(false);
-    const handleWindowOpen = () => setModalOpen(true);
-    const handleWindowClose = () => setModalOpen(false);
+    const handleWindowOpen = () => setWindowOpen(true);
+    const handleWindowClose = () => setWindowOpen(false);
 
     return (
         <header>
@@ -51,19 +56,21 @@ const Header = () => {
                     ) : (
                         <li><Link to="/prizeList">Ceny</Link></li>
                     )}
-                    {location.pathname === '/login' ? (
+                    {location.pathname !== '/' ? (
                         <li><Link to="/">Domov</Link></li>
                     ) : (
-                        <li><Link to="/login">Prihlasenie</Link></li>
+                        localStorage.getItem('email') ? null : (
+                            <li><Link to="/login">Prihlásenie</Link></li>
+                        )
                     )}
                     {localStorage.getItem('email') && (
                         <li  onMouseEnter={handleMouseEnter}
                              onMouseLeave={handleMouseLeave}>
                             <li>{localStorage.getItem('username')}</li>
                             {showOptions && (
-                                <ul className="user-options">
+                                <ul className="options">
                                     <li><button onClick={handleLogout}>Odhlásiť sa</button></li>
-                                    <li><button>Zmeniť údaje</button></li>
+                                    <li onClick={handleUpdate}><button>Zmeniť Meno</button></li>
                                     <li><button onClick={handleWindowOpen}>Vymazať účet</button></li>
                                 </ul>
                             )}
@@ -71,15 +78,14 @@ const Header = () => {
                     )}
                 </ul>
             </nav>
-            {isModalOpen && (
-                <Window isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+            {isWindowOpen && (
+                <Window isOpen={isWindowOpen} onClose={() => setWindowOpen(false)}>
                     <h2>Vymazať účet</h2>
                     <p>Si si istý, že chceš vymazať svoj účet?</p>
                     <button onClick={() => {
                         handleDelete();
-                        setModalOpen(false);
-                    }}>
-                        Áno, vymazať
+                        setWindowOpen(false);
+                    }}> Áno, vymazať
                     </button>
                     <button onClick={handleWindowClose}>Zrušiť</button>
                 </Window>

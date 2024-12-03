@@ -1,4 +1,3 @@
-// components/Prize.js
 import React from 'react';
 import "./Prizes.css"
 

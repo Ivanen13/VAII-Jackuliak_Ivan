@@ -27,7 +27,7 @@ nav ul li a:hover {
     color: #931414;
 }
 
-.user-options {
+.options {
     position: relative;
     background-color:  #260c38;
     border: 1px solid #090909;
@@ -37,12 +37,12 @@ nav ul li a:hover {
     border-radius: 60px;
 }
 
-.user-options li {
+.options li {
     margin: 5px 0;
     text-align: center;
 }
 
-.user-options button {
+.options button {
     background: none;
     border: none;
     color: #e30909;
@@ -52,7 +52,7 @@ nav ul li a:hover {
     padding: 5px 0;
 }
 
-.user-options button:hover {
+.options button:hover {
     text-decoration: underline;
     color: #931414;
 }
