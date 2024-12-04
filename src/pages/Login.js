@@ -7,8 +7,7 @@ function Login() {
         password: '',
     });
 
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
         setData({
@@ -38,7 +37,7 @@ function Login() {
                 const data = await response.json();
                 console.log('data:', data);
 
-                setSuccess('Prihlasenie bola úspešne!');
+                setMessage('Prihlasenie bola úspešne!');
                 setData({
                     email: '',
                     password: '',
@@ -49,10 +48,10 @@ function Login() {
                 window.location.href = '/';
             } else {
                 const errorData = await response.json();
-                setError(errorData.message || 'Chyba pri prihlaseni.');
+                setMessage(errorData.message || 'Chyba pri prihlaseni.');
             }
         } catch (error) {
-            setError(error.message +'Chyba pri pripojení k serveru.');
+            setMessage(error.message +'Chyba pri pripojení k serveru.');
         }
     };
 
@@ -61,8 +60,7 @@ function Login() {
             <div className="login">
                 <h2>Prihlásenie</h2>
                 <form onSubmit={handleSubmit}>
-                    {error && <p className="error">{error}</p>}
-                    {success && <p className="success">{success}</p>}
+                    {message && <p>{message}</p>}
                     <div>
                         <label htmlFor="email">email</label>
                         <input type="email"

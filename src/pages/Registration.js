@@ -9,8 +9,7 @@ function Registration() {
         confirmPassword: ''
     });
 
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
         setData({
@@ -23,7 +22,7 @@ function Registration() {
         e.preventDefault();
 
         if (data.password !== data.confirmPassword) {
-            setError('Heslá sa nezhodujú!');
+            setMessage('Heslá sa nezhodujú!');
             return;
         }
 
@@ -43,7 +42,7 @@ function Registration() {
             });
 
             if (response.ok) {
-                setSuccess('Registrácia bola úspešná!');
+                setMessage('Registrácia bola úspešná!');
                 setData({
                     username: '',
                     email: '',
@@ -53,10 +52,10 @@ function Registration() {
                 window.location.href = '/login';
             } else {
                 const errorData = await response.json();
-                setError(errorData.message || 'Chyba pri registrácii.');
+                setMessage(errorData.message || 'Chyba pri registrácii.');
             }
         } catch (error) {
-            setError(error.message +'Chyba pri pripojení k serveru.');
+            setMessage(error.message +'Chyba pri pripojení k serveru.');
         }
     };
 
@@ -65,8 +64,7 @@ function Registration() {
             <div className="login">
                 <h2>Registracia</h2>
                 <form onSubmit={handleSubmit}>
-                    {error && <p className="error">{error}</p>}
-                    {success && <p className="success">{success}</p>}
+                    {message && <p>{message}</p>}
                     <div>
                         <label htmlFor="username">Užívateľské meno</label>
                         <input type="text"

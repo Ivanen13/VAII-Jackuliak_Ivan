@@ -1,7 +1,5 @@
 package com.example.reactbackend.Users;
 
-import com.example.reactbackend.Users.User;
-import com.example.reactbackend.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

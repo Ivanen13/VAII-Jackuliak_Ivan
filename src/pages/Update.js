@@ -8,8 +8,7 @@ function Update() {
         password: ''
     });
 
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
         setData({
@@ -38,7 +37,7 @@ function Update() {
 
             if (response.ok) {
                 const data = await response.json();
-                setSuccess('Meno zmenene uspesne');
+                setMessage('Meno zmenene uspesne');
                 setData({
                     username: '',
                     password: ''
@@ -50,10 +49,10 @@ function Update() {
                 window.location.href = '/';
             } else {
                 const errorData = await response.json();
-                setError(errorData.message || 'Chyba pri zmene mena.');
+                setMessage(errorData.message || 'Chyba pri zmene mena.');
             }
         } catch (error) {
-            setError(error.message +'Chyba pri pripojení k serveru.');
+            setMessage(error.message +'Chyba pri pripojení k serveru.');
         }
     };
 
@@ -62,8 +61,7 @@ function Update() {
             <div className="login">
                 <h2>Zmena mena</h2>
                 <form onSubmit={handleSubmit}>
-                    {error && <p className="error">{error}</p>}
-                    {success && <p className="success">{success}</p>}
+                    {message && <p>{message}</p>}
                     <div>
                         <label htmlFor="username">Zmen Užívateľské meno</label>
                         <input type="text"
