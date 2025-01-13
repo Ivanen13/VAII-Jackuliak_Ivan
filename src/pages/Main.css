@@ -21,14 +21,15 @@ main {
     pointer-events: none;
 }
 
-.button {
+.containerMain {
     justify-content: center;
     align-items: center;
     display: flex;
+    background-color: black;
 }
 
 main div button {
-    color: #d00f0f;
+    color: #e30909;
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;

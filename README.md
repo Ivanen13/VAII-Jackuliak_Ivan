@@ -68,3 +68,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+Potreba PostgreSQL 17 databazy + tabulky 
+nvm install naistaluje vsetky zavislosti
+spustit server(spring)
+spustit react(npm start)

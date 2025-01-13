@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    bottom: 0;
+    width: 100%;
+    height: 700px;
+}
+
+.deck {
+    position: absolute;
+    top: 60%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card {
+    width: 100px;
+    height: auto;
+}
+
+.actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.info {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background-color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+

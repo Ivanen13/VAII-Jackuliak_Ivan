@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './Login.css';
+import Windows from "../components/Window";
 
 function Update() {
     const [data, setData] = useState({
@@ -9,6 +10,7 @@ function Update() {
     });
 
     const [message, setMessage] = useState('');
+    const [isOpen,setIsOpen] = useState(false);
 
     const handleChange = (e) => {
         setData({
@@ -27,6 +29,7 @@ function Update() {
                 referrerPolicy: "no-referrer-when-downgrade",
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({
                     username: data.username,
@@ -42,17 +45,20 @@ function Update() {
                     username: '',
                     password: ''
                 });
-                const { username, email } = data;
+                const { username, email, token } = data;
                 localStorage.clear();
                 localStorage.setItem('username', username);
                 localStorage.setItem('email', email);
+                localStorage.setItem("token", token);
                 window.location.href = '/';
             } else {
                 const errorData = await response.json();
                 setMessage(errorData.message || 'Chyba pri zmene mena.');
+                setIsOpen(true);
             }
         } catch (error) {
             setMessage(error.message +'Chyba pri pripojení k serveru.');
+            setIsOpen(true);
         }
     };
 
@@ -61,7 +67,6 @@ function Update() {
             <div className="login">
                 <h2>Zmena mena</h2>
                 <form onSubmit={handleSubmit}>
-                    {message && <p>{message}</p>}
                     <div>
                         <label htmlFor="username">Zmen Užívateľské meno</label>
                         <input type="text"
@@ -83,6 +88,10 @@ function Update() {
                     <input type="submit" value="Zmeniť meno" />
                 </form>
             </div>
+            <Windows isOpen={isOpen}>
+                <h2>{message}</h2>
+                <button onClick={() => setIsOpen(false)}>OK</button>
+            </Windows>
         </div>
 
     );

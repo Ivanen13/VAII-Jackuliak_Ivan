@@ -1,10 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Main';
-import Login from './pages/Login';
+import Login from './user/Login';
 import Prize from './components/PrizeList';
-import Registration from "./pages/Registration";
-import Update from "./pages/Update";
+import Registration from "./user/Registration";
+import Update from "./user/Update";
+import SlotMachine from "./pages/SlotMachine";
+import WheelOfFortune from "./pages/WheelOfFortune";
+import Card from "./pages/Card";
 
 
 const Routers = () => {
@@ -15,6 +18,9 @@ const Routers = () => {
             <Route path="/prizeList" element={<Prize/>} />
             <Route path="/registration" element={<Registration/>}></Route>
             <Route path="/update" element={<Update/>}></Route>
+            <Route path="/slotMachine" element={<SlotMachine/>}></Route>
+            <Route path="/wheelOfFortune" element={<WheelOfFortune/>}></Route>
+            <Route path="/card" element={<Card/>}></Route>
         </Routes>
     );
 };

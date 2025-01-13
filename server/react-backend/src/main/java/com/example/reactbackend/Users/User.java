@@ -18,6 +18,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private int money;
+
     public Long getId() {
         return id;
     }
@@ -45,4 +48,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money += money;
+    }
+
+
 }

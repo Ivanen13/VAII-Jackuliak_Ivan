@@ -1,9 +1,10 @@
-package com.example.reactbackend.others;
+package com.example.reactbackend.Users;
 
 public class BodyRequest {
     private String username;
     private String email;
     private String password;
+    private int money;
 
     public String getUsername() {
         return username;
@@ -24,8 +25,11 @@ public class BodyRequest {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

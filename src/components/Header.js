@@ -24,6 +24,7 @@ const Header = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({email}),
             });
@@ -45,6 +46,32 @@ const Header = () => {
     const handleMouseLeave = () => setShowOptions(false);
     const handleWindowOpen = () => setWindowOpen(true);
     const handleWindowClose = () => setWindowOpen(false);
+
+    async function addCredit() {
+        try {
+            const response = await fetch('http://127.0.0.1:8080/api/addCredit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email: localStorage.getItem("email")} ),
+            });
+            const data = await response.json();
+            console.info(data);
+            if(data == 10) {
+                let number = parseInt(localStorage.getItem("money"));
+                console.info(number);
+                number += data;
+                localStorage.setItem("money",number.toString());
+                alert("Kedit dobyti");
+            } else {
+                alert("Zlyhanie");
+            }
+    } catch (error) {
+            console.error("Chyba pripojenia k serveru:", error);
+        }
+    }
+
 
     return (
         <header>
@@ -72,6 +99,8 @@ const Header = () => {
                                     <li><button onClick={handleLogout}>Odhlásiť sa</button></li>
                                     <li onClick={handleUpdate}><button>Zmeniť Meno</button></li>
                                     <li><button onClick={handleWindowOpen}>Vymazať účet</button></li>
+                                    <li><button onClick={addCredit}>Dobit kredit</button></li>
+                                    <li> body: {localStorage.getItem('money')}</li>
                                 </ul>
                             )}
                         </li>

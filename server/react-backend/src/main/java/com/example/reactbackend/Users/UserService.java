@@ -66,4 +66,32 @@ public class UserService {
         return user;
     }
 
+    public boolean userMoney(String email, int money) {
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            throw new IllegalArgumentException("Nesprávne zadané údaje.");
+        }
+
+        if (money < 0) {
+            throw new IllegalArgumentException("Zaporne cislo.");
+        }
+
+        return (user.getMoney() >= money);
+    }
+
+    public User getUser(String email) {
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            throw new IllegalArgumentException("Nesprávne zadané údaje.");
+        }
+        return user;
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
 }

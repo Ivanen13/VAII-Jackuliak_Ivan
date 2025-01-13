@@ -1,0 +1,77 @@
+.wheel-container {
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+    position: relative;
+    align-items: center;
+}
+
+.marker {
+    position: absolute;
+    width: 60px;
+    left: 320px;
+    top: -5px;
+    z-index: 2;
+}
+
+.wheel {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.button {
+    display: block;
+    cursor: pointer;
+    background-color: #d2c2c2;
+    margin: 40px auto;
+    width: 250px;
+}
+
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .wheel {
+        width: 70vmin;
+        height: 70vmin;
+    }
+
+    .button {
+        font-size: 0.9rem;
+    }
+
+    .marker {
+        width: 10vmin;
+        height: 10vmin;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .wheel {
+        width: 80vmin;
+        height: 80vmin;
+    }
+
+    .marker {
+        width: 10vmin;
+        height: 10vmin;
+    }
+
+    .button {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+}
