@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -23,9 +24,6 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Referrer-Policy", "no-referrer-when-downgrade");
 
-        System.out.println("Username: " + request.getUsername());
-        System.out.println("Email: " + request.getEmail());
-        System.out.println("Password: " + request.getPassword());
         try {
             User user = userService.registerUser(request.getUsername(), request.getEmail(), request.getPassword());
 
@@ -113,6 +111,21 @@ public class UserController {
             return 0;
         }
         return 10;
+    }
+    @PostMapping("/admin")
+    public String getAdminDashboard(@RequestBody BodyRequest request, @RequestHeader("Authorization") String authHeader) {
+
+        if(validation(authHeader) != null)
+            return "Zly token";
+
+        try {
+            User user = userService.getUser(request.getEmail());
+            if(user.getRole().getName().equals("Admin"))
+                return "Welcome to the Admin Dashboard!";
+            return "Zakazany pristup c.2";
+        } catch (IllegalArgumentException e) {
+            return "Chyba";
+        }
     }
 
     private ResponseEntity<?> validation(String authHeader) {

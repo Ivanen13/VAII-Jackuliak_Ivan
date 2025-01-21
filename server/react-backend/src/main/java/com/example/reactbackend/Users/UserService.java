@@ -1,5 +1,6 @@
 package com.example.reactbackend.Users;
 
+import com.example.reactbackend.others.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -24,6 +27,8 @@ public class UserService {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
+        user.setMoney(30);
+        user.setRole(roleRepository.findByRoleId(2));
         user.setPassword(passwordEncoder.encode(password));
 
         return userRepository.save(user);
@@ -32,6 +37,7 @@ public class UserService {
     public User loginUser(String email, String password) {
 
         User user = userRepository.findByEmail(email);
+        System.out.println("Rola: " + user.getRole().getName());
 
         if (user == null) {
             throw new IllegalArgumentException("Nesprávne zadaný email.");

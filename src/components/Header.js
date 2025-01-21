@@ -72,6 +72,23 @@ const Header = () => {
         }
     }
 
+    async function score() {
+        try {
+            const response = await fetch('http://127.0.0.1:8080/api/admin', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    email: localStorage.getItem("email")})
+            });
+            const data = await response.json();
+            console.info(data);
+        } catch (error) {
+            console.error("Chyba pripojenia k serveru:", error);
+        }
+    }
 
     return (
         <header>
@@ -100,6 +117,7 @@ const Header = () => {
                                     <li onClick={handleUpdate}><button>Zmeniť Meno</button></li>
                                     <li><button onClick={handleWindowOpen}>Vymazať účet</button></li>
                                     <li><button onClick={addCredit}>Dobit kredit</button></li>
+                                    <li><button onClick={score}>Skore</button></li>
                                     <li> body: {localStorage.getItem('money')}</li>
                                 </ul>
                             )}
