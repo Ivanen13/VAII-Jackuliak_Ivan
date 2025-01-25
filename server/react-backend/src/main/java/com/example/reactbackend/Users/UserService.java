@@ -1,5 +1,7 @@
 package com.example.reactbackend.Users;
 
+import com.example.reactbackend.others.Reward;
+import com.example.reactbackend.others.RewardRepository;
 import com.example.reactbackend.others.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +16,8 @@ public class UserService {
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private RewardRepository rewardRepository;
 
     public User registerUser(String username, String email, String password) {
 
@@ -98,6 +102,13 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    public void createReward(int count, String description) {
+        Reward reward = new Reward();
+        reward.setCount(count);
+        reward.setDescription(description);
+        rewardRepository.save(reward);
     }
 
 }

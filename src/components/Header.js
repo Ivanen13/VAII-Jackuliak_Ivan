@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './Header.css';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import Window from "./Window";
 
 
@@ -8,6 +8,7 @@ const Header = () => {
     const location = useLocation();
     const [showOptions, setShowOptions] = useState(false);
     const [isWindowOpen, setWindowOpen] = useState(false);
+    const navigate = useNavigate()
     const handleLogout = () => {
         localStorage.clear()
         window.location.href = '/';
@@ -73,6 +74,7 @@ const Header = () => {
     }
 
     async function score() {
+        navigate("/rewards")
         try {
             const response = await fetch('http://127.0.0.1:8080/api/admin', {
                 method: "POST",
@@ -117,7 +119,7 @@ const Header = () => {
                                     <li onClick={handleUpdate}><button>Zmeniť Meno</button></li>
                                     <li><button onClick={handleWindowOpen}>Vymazať účet</button></li>
                                     <li><button onClick={addCredit}>Dobit kredit</button></li>
-                                    <li><button onClick={score}>Skore</button></li>
+                                    <li><button onClick={score}>Odmeny</button></li>
                                     <li> body: {localStorage.getItem('money')}</li>
                                 </ul>
                             )}

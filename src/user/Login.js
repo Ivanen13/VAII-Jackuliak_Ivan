@@ -23,7 +23,7 @@ function Login() {
             console.log('Poziadavka:', data);
             const response = await fetch('http://127.0.0.1:8080/api/login', {
                 method: 'POST',
-                referrerPolicy: "same-origin",
+                referrerPolicy: "no-referrer-when-downgrade",
                 headers: {
                     'Content-Type': 'application/json',
                 },

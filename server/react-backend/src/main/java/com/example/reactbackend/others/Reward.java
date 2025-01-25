@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "reward")
-public class reward {
+@Table(name = "Reward")
+public class Reward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reward_id;
@@ -19,4 +19,19 @@ public class reward {
 
     @Column(nullable = false)
     private String description;
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public int getCount() {
+        return count;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
