@@ -16,8 +16,7 @@ public class UserService {
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private RewardRepository rewardRepository;
+
 
     public User registerUser(String username, String email, String password) {
 
@@ -103,12 +102,4 @@ public class UserService {
     public void saveUser(User user) {
         userRepository.save(user);
     }
-
-    public void createReward(int count, String description) {
-        Reward reward = new Reward();
-        reward.setCount(count);
-        reward.setDescription(description);
-        rewardRepository.save(reward);
-    }
-
 }

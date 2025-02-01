@@ -112,26 +112,6 @@ public class UserController {
         }
         return 10;
     }
-    @PostMapping("/admin")
-    public ResponseEntity<?> getAdminDashboard(@RequestBody BodyRequest request, @RequestHeader("Authorization") String authHeader) {
-
-        if(validation(authHeader) != null)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "zly token"));
-
-        try {
-            User user = userService.getUser(request.getEmail());
-            if(user.getRole().getName().equals("Admin")) {
-                userService.createReward(request.getCount(), request.getDescription());
-                ResponseEntity.ok(Map.of(
-                    "message", "Odmena vytvorena"
-                ));
-            }
-
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "iba Admin"));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
-        }
-    }
 
     private ResponseEntity<?> validation(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
