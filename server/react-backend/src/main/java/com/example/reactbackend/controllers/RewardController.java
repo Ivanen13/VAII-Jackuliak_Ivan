@@ -8,8 +8,11 @@ import com.example.reactbackend.others.RewardService;
 import com.example.reactbackend.others.Tokens;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +62,45 @@ public class RewardController {
         }
     }
 
+    @PutMapping("/rewards/{id}")
+    public ResponseEntity<?> editReward(@PathVariable("id") Long id, @RequestBody Reward reward,@RequestHeader("Authorization") String authHeader, @RequestHeader("Email") String emailHeader ) {
+        if(validation(authHeader) != null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "zly token"));
+
+        try {
+            User user = userService.getUser(emailHeader);
+            if(user.getRole().getName().equals("Admin")) {
+                return ResponseEntity.ok(rewardService.editReward(id,reward));
+            }
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "iba Admin"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/rewards/{id}")
+    public ResponseEntity<?> deleteReward(@PathVariable("id") Long id, @RequestHeader("Authorization") String authHeader, @RequestHeader("Email") String emailHeader) {
+        if(validation(authHeader) != null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "zly token"));
+
+        try {
+            User user = userService.getUser(emailHeader);
+            if(user.getRole().getName().equals("Admin")) {
+                boolean success = rewardService.deleteReward(id);
+                if (success) {
+                    return ResponseEntity.ok().build();
+                } else {
+                    return ResponseEntity.notFound().build();
+                }
+            }
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "iba Admin"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
+        }
+
+    }
     private ResponseEntity<?> validation(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chýba JWT token");

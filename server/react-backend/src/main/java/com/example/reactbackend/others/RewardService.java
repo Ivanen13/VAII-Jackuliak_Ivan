@@ -3,8 +3,10 @@ package com.example.reactbackend.others;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RewardService {
@@ -18,7 +20,26 @@ public class RewardService {
     }
 
     public List<Reward> getAllRewards() {
-        List<Reward> rewards = rewardRepository.findAll();
         return rewardRepository.findAll();
     }
+
+    public Reward editReward(Long id, Reward newRewardData) {
+        Optional<Reward> reward = rewardRepository.findById(id);
+        if (!reward.isPresent()) {
+            return null;
+        }
+        Reward changeReward = reward.get();
+        changeReward.setCount(newRewardData.getCount());
+        changeReward.setDescription(newRewardData.getDescription());
+        return rewardRepository.save(changeReward);
+    }
+    @Transactional
+    public boolean deleteReward(Long id) {
+        if (!rewardRepository.existsById(id)) {
+            return false;
+        }
+        rewardRepository.deleteById(id);
+        return true;
+    }
+
 }

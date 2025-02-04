@@ -34,4 +34,6 @@ public class Reward {
     public String getDescription() {
         return description;
     }
+
+    public Long getReward_id(){return reward_id;}
 }
