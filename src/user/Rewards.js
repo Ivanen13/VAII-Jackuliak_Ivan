@@ -12,7 +12,7 @@ function Rewards() {
     const [message, setMessage] = useState("")
     const [action, setAction] = useState('');
     const [selectedReward, setSelectedReward] = useState(null);
-    const [formData, setFormData] = useState({ count: 0, description: '' });
+    const [formData, setFormData] = useState({reward_id: 0, count: 0, description: ''});
     const [rewards, setRewards] = useState([]);
 
     function openWindow(action) {
@@ -80,7 +80,6 @@ function Rewards() {
                     count: '',
                     description: '',
                 });
-                const { username, email, money, token } = data;
             } else {
                 const errorData = await response.json();
                 setMessage(errorData.message || 'Chyba pri prihlaseni.');
@@ -94,13 +93,16 @@ function Rewards() {
     }
 
 
-
     async function editReward() {
         if (!selectedReward) return;
         try {
-            const response = await fetch(`/api/rewards/${selectedReward.id}`, {
+            const response = await fetch(`http://127.0.0.1:8080/api/rewards/${selectedReward.reward_id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    'Email': localStorage.getItem("email")
+                },
                 body: JSON.stringify(formData),
             });
             if (response.ok) {
@@ -114,8 +116,13 @@ function Rewards() {
     async function deleteReward() {
         if (!selectedReward) return;
         try {
-            const response = await fetch(`/api/rewards/${selectedReward.id}`, {
+            const response = await fetch(`http://127.0.0.1:8080/api/rewards/${selectedReward.reward_id}`, {
                 method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    'Email': localStorage.getItem("email")
+                },
             });
             if (response.ok) {
                 fetchRewards();
@@ -169,7 +176,6 @@ function Rewards() {
                     <>
                         <h2>Zmenit Odmenu</h2>
                         {selectedReward === null ? (
-                            // Zoznam odmien na výber
                             <div>
                                 <h3>Vyberte odmenu na úpravu:</h3>
                                 <ul>
@@ -178,9 +184,8 @@ function Rewards() {
                                             <button
                                                 type="button"
                                                 onClick={() => {
-                                                    // Po výbere nastavíme vybranú odmenu a predvyplníme formulár
                                                     setSelectedReward(reward);
-                                                    setFormData({ count: reward.count, description: reward.description });
+                                                    setFormData({ count: reward.count, description: reward.description, id: reward.reward_id });
                                                 }}
                                             >
                                                 {reward.description} (Počet: {reward.count})
@@ -190,7 +195,6 @@ function Rewards() {
                                 </ul>
                             </div>
                         ) : (
-                            // Formulár na úpravu odmeny
                             <form>
                                 <div>
                                     <label htmlFor="count">Počet</label>
@@ -225,13 +229,39 @@ function Rewards() {
                 )}
                 {action === 'delete' && (
                     <>
-                        <h2>Vymazat Odmenu</h2>
-                        <form>
-                            {/* Môžete napríklad pridať potvrdenie vymazania alebo výber odmeny */}
-                            <button type="button" onClick={() => deleteReward()}>
-                                Vymazat Odmenu
-                            </button>
-                        </form>
+                        <h2>Vymazať Odmenu</h2>
+                        {selectedReward === null ? (
+                            <div>
+                                <h3>Vyberte odmenu na vymazanie:</h3>
+                                <ul>
+                                    {rewards.map((reward) => (
+                                        <li key={reward.id || reward.reward_id}>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedReward(reward);
+                                                }}
+                                            >
+                                                {reward.description} (Počet: {reward.count})
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            <div>
+                                <p>
+                                    Ste si istý, že chcete vymazať odmenu:{" "}
+                                    <strong>{selectedReward.description}</strong> (Počet: {selectedReward.count})?
+                                </p>
+                                <button type="button" onClick={deleteReward}>
+                                    Vymazať Odmenu
+                                </button>
+                                <button type="button" onClick={() => setSelectedReward(null)}>
+                                    Zrušiť
+                                </button>
+                            </div>
+                        )}
                     </>
                 )}
             </Window>

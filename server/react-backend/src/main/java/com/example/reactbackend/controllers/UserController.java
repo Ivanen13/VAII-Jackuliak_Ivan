@@ -37,6 +37,9 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody BodyRequest request) {
         try {
             User user = userService.loginUser(request.getEmail(), request.getPassword());
+            boolean admin = false;
+             if(user.getRole().getName().equals("Admin"))
+                 admin = true;
 
             String token = Tokens.generateToken(request.getUsername());
 
@@ -45,7 +48,8 @@ public class UserController {
                 "username", user.getUsername(),
                 "email", user.getEmail(),
                 "money", user.getMoney(),
-                "token", token
+                "token", token,
+                "admin",admin
             ));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));

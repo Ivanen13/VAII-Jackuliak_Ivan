@@ -1,4 +1,4 @@
-package com.example.reactbackend.others;
+package com.example.reactbackend.Rewad;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

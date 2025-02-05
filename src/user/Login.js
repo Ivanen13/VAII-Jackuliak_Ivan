@@ -42,11 +42,12 @@ function Login() {
                     email: '',
                     password: '',
                 });
-                const { username, email, money, token } = data;
+                const { username, email, money, token, admin } = data;
                 localStorage.setItem('username', username);
                 localStorage.setItem('email', email);
                 localStorage.setItem("money",money);
                 localStorage.setItem("token", token);
+                localStorage.setItem("admin", admin)
                 window.location.href = '/';
             } else {
                 const errorData = await response.json();

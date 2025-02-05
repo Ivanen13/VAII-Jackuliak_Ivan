@@ -1,7 +1,8 @@
-package com.example.reactbackend.others;
+package com.example.reactbackend.Rewad;
 
+import com.example.reactbackend.Rewad.Reward;
+import com.example.reactbackend.Rewad.RewardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
