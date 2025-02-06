@@ -20,3 +20,8 @@
     position: relative;
     text-align: center;
 }
+
+.window-content h3,
+.window-content p {
+    color: red;
+}

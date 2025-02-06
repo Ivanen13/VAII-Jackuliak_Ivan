@@ -9,6 +9,7 @@ import SlotMachine from "./pages/SlotMachine";
 import WheelOfFortune from "./pages/WheelOfFortune";
 import Card from "./pages/Card";
 import Rewards from "./user/Rewards";
+import File from "./pages/File";
 
 
 const Routers = () => {
@@ -23,6 +24,7 @@ const Routers = () => {
             <Route path="/wheelOfFortune" element={<WheelOfFortune/>}></Route>
             <Route path="/card" element={<Card/>}></Route>
             <Route path="/rewards" element={<Rewards/>}></Route>
+            <Route path="/file" element={<File></File>}></Route>
         </Routes>
     );
 };

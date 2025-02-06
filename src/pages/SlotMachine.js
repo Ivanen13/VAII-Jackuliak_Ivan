@@ -156,12 +156,12 @@ const SlotMachine = () => {
                 {isSpinning ? "Točím..." : "Skúsiť šťastie"}
             </button>
             <Windows isOpen={isOpen}>
-                <h2>Select an Option</h2>
+                <h2>Kolko stavit</h2>
                 <input
                     type="text"
                     value={inputValue}
                     onChange={handleInputChange}
-                    placeholder="Type something..."
+                    placeholder="Zadaj hodnotu"
                 />
                 <button onClick={() => verifyValue()}>Option 2</button>
             </Windows>

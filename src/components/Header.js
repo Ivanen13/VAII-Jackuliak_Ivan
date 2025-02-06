@@ -97,6 +97,7 @@ const Header = () => {
             <h1>Vyhrajte skvelé ceny!</h1>
             <nav>
                 <ul>
+                    <li><Link to="/file">Nahrat subor</Link></li>
                     {location.pathname === '/prizeList' ? (
                         <li><Link to="/">Domov</Link></li>
                     ) : (
@@ -119,7 +120,9 @@ const Header = () => {
                                     <li onClick={handleUpdate}><button>Zmeniť Meno</button></li>
                                     <li><button onClick={handleWindowOpen}>Vymazať účet</button></li>
                                     <li><button onClick={addCredit}>Dobit kredit</button></li>
-                                    <li><button onClick={score}>Odmeny</button></li>
+                                    {localStorage.getItem("admin") === "true" && (
+                                        <li><button onClick={score}>Odmeny</button></li>
+                                    )}
                                     <li> body: {localStorage.getItem('money')}</li>
                                 </ul>
                             )}
