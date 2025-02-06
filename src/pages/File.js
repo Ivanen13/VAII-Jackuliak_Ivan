@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './File.css'; // Import CSS súboru
+import './File.css';
 
 function File() {
     const [file, setFile] = useState(null);
